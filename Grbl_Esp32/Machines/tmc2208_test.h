@@ -27,6 +27,15 @@
 
 #define USE_TRINAMIC // Using at least 1 trinamic driver
 
+/* Define SW_SERIAL_MOTORS or HW_SERIAL_MOTORS */
+#define SW_SERIAL_MOTORS
+//#define HW_SERIAL_MOTORS
+
+#ifdef SW_SERIAL_MOTORS
+#define RX_SW_SERIAL_MOTORS     GPIO_NUM_16
+#define TX_SW_SERIAL_MOTORS     GPIO_NUM_16
+#endif
+
 #define X_STEP_PIN              GPIO_NUM_18
 #define X_DIRECTION_PIN         GPIO_NUM_26
 #define X_TRINAMIC              // using SPI control

@@ -34,8 +34,6 @@ TrinamicUartDriver :: TrinamicUartDriver( uint8_t axis_index,
                                           uint8_t dir_pin,
                                           uint16_t driver_part_number,
                                           float r_sense, 
-                                        //   uint16_t SW_RX_pin, //only for SW_SERIAL
-                                        //   uint16_t SW_TX_pin, //only for SW_SERIAL
                                           uint8_t addr) {
     this->axis_index = axis_index;
     this->dual_axis_index = axis_index < 6 ? 0 : 1; // 0 = primary 1 = ganged

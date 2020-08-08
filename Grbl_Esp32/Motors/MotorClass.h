@@ -75,6 +75,7 @@ typedef enum {
 
 // These are used for setup and to talk to the motors as a group.
 void init_motors();
+uint8_t get_trinamic_driver_uart_address(uint8_t axis);
 uint8_t get_next_trinamic_driver_index();
 void readSgTask(void* pvParameters);
 void motor_read_settings();
