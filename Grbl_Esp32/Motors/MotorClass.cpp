@@ -145,10 +145,12 @@ void init_motors() {
 #endif
 
 #ifdef Y2_TRINAMIC_DRIVER
-    #if(Y2_TRINAMIC_DRIVER == 2130){
+    #if(Y2_TRINAMIC_DRIVER == 2130)
+    {
     myMotor[Y_AXIS][1] = new TrinamicDriver(Y2_AXIS, Y2_STEP_PIN, Y2_DIRECTION_PIN, Y2_TRINAMIC_DRIVER, Y2_RSENSE, Y2_CS_PIN, get_next_trinamic_driver_index());
     }
-    #elif(Y2_TRINAMIC_DRIVER == 2208 || Y2_TRINAMIC_DRIVER == 2209){
+    #elif(Y2_TRINAMIC_DRIVER == 2208 || Y2_TRINAMIC_DRIVER == 2209)
+    {
         #ifdef HW_SERIAL_MOTORS
         myMotor[Y_AXIS][1] = new TrinamicUartDriver(Y2_AXIS, Y2_STEP_PIN, Y2_DIRECTION_PIN, Y2_TRINAMIC_DRIVER, Y2_RSENSE, get_trinamic_driver_uart_address(Y2_AXIS));
         #elif defined(SW_SERIAL_MOTORS)
@@ -170,10 +172,12 @@ void init_motors() {
 
     // this WILL be done better with settings
 #ifdef Z_TRINAMIC_DRIVER
-    #if(Z_TRINAMIC_DRIVER == 2130){
+    #if(Z_TRINAMIC_DRIVER == 2130)
+    {
     myMotor[Z_AXIS][0] = new TrinamicDriver(Z_AXIS, Z_STEP_PIN, Z_DIRECTION_PIN, Z_TRINAMIC_DRIVER, Z_RSENSE, Z_CS_PIN, get_next_trinamic_driver_index());
     }
-    #elif(Z_TRINAMIC_DRIVER == 2208 || Z_TRINAMIC_DRIVER == 2209){
+    #elif(Z_TRINAMIC_DRIVER == 2208 || Z_TRINAMIC_DRIVER == 2209)
+    {
         #ifdef HW_SERIAL_MOTORS
         myMotor[Z_AXIS][0] = new TrinamicUartDriver(Z_AXIS, Z_STEP_PIN, Z_DIRECTION_PIN, Z_TRINAMIC_DRIVER, Z_RSENSE, get_trinamic_driver_uart_address(Z_AXIS));
         #elif defined(SW_SERIAL_MOTORS)
@@ -200,7 +204,8 @@ void init_motors() {
     {
     myMotor[Z_AXIS][1] = new TrinamicDriver(Z2_AXIS, Z2_STEP_PIN, Z2_DIRECTION_PIN, Z2_TRINAMIC_DRIVER, Z2_RSENSE, Z2_CS_PIN, get_next_trinamic_driver_index());
     }
-    #elif(Z2_TRINAMIC_DRIVER == 2208 || Z2_TRINAMIC_DRIVER == 2209) {
+    #elif(Z2_TRINAMIC_DRIVER == 2208 || Z2_TRINAMIC_DRIVER == 2209) 
+    {
         #ifdef HW_SERIAL_MOTORS
         myMotor[Z_AXIS][1] = new TrinamicUartDriver(Z2_AXIS, Z2_STEP_PIN, Z2_DIRECTION_PIN, Z2_TRINAMIC_DRIVER, Z2_RSENSE, get_trinamic_driver_uart_address(Z2_AXIS));
         #elif defined(SW_SERIAL_MOTORS)
