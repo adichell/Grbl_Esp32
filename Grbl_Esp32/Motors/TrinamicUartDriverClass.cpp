@@ -88,7 +88,7 @@ void TrinamicUartDriver::sw_serial_init() {
         tmcstepper = new TMC2208Stepper(SW_RX_pin, SW_TX_pin, _r_sense);
     else if (_driver_part_number == 2209)
         // tmcstepper = new TMC2209Stepper(sw_serial, _r_sense, addr);
-        tmcstepper = new TMC2209Stepper(SW_RX_pin, SW_TX_pin, _r_sense, (uint8_t)0);
+        tmcstepper = new TMC2209Stepper(SW_RX_pin, SW_TX_pin, _r_sense, addr);
     else {
         grbl_msg_sendf(CLIENT_SERIAL, MSG_LEVEL_INFO, "Trinamic Uart unsupported p/n:%d", _driver_part_number);
         return;

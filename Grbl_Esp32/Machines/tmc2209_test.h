@@ -2,7 +2,7 @@
     tmc2208_test.h
     Part of Grbl_ESP32
 
-    Pin assignments for the TMC2209 
+    Pin assignments for the TMC2209 test with a single motor driver.
 
     2020    - The Ant Team
 
@@ -36,13 +36,13 @@
 #define TX_SW_SERIAL_MOTORS     GPIO_NUM_5
 #endif
 
-#define X_DRIVER_ADDRESS        0
+#define X_DRIVER_ADDRESS        1
 
-#define X_STEP_PIN              GPIO_NUM_18
+#define X_STEP_PIN              GPIO_NUM_4
 #define X_DIRECTION_PIN         GPIO_NUM_26
 #define X_TRINAMIC              
-#define X_TRINAMIC_DRIVER       2209        // Which Driver Type?
-#define X_RSENSE                TMC2130_RSENSE_DEFAULT //TODO: change this!
+#define X_TRINAMIC_DRIVER       2209                   // Which Driver Type?
+#define X_RSENSE                TMC2209_RSENSE_DEFAULT // TODO: change this!
 
 
 // OK to comment out to use pin for other features
@@ -52,25 +52,13 @@
 //#define USE_SERVO_AXES
 #define USE_SPINDLE
 
-#ifdef USE_SERVO_AXES
-    #define SPINDLE_TYPE            SPINDLE_TYPE_NONE
-
-    #define SERVO_Z_PIN                     GPIO_NUM_27 // comment this out if PWM spindle/laser control.
-    #define SERVO_Z_RANGE_MIN               0.0
-    #define SERVO_Z_RANGE_MAX               5.0
-    #define SERVO_Z_HOMING_TYPE             SERVO_HOMING_TARGET // during homing it will instantly move to a target value
-    #define SERVO_Z_HOME_POS                SERVO_Z_RANGE_MAX // move to max during homing
-    #define SERVO_Z_MPOS                    false           // will not use mpos, uses work coordinates
-#else
-
-    #define SPINDLE_TYPE        SPINDLE_TYPE_PWM
-    #define SPINDLE_OUTPUT_PIN     GPIO_NUM_27
-#endif
+#define SPINDLE_TYPE            SPINDLE_TYPE_PWM
+#define SPINDLE_OUTPUT_PIN      GPIO_NUM_2
 
 // #define X_LIMIT_PIN 
-#define X_LIMIT_PIN             GPIO_NUM_39
-#define LIMIT_MASK              B1 //TODO: to be checked
+#define X_LIMIT_PIN                 GPIO_NUM_39
+#define LIMIT_MASK                  B1                  //TODO: to be checked
 
 // defaults
-#define DEFAULT_Z_STEPS_PER_MM 100.0    // This is used as the servo calibration
-#define DEFAULT_Z_MAX_TRAVEL 300.0      // This is used as the servo calibration
+//#define DEFAULT_Z_STEPS_PER_MM 100.0                    // This is used as the servo calibration
+//#define DEFAULT_Z_MAX_TRAVEL   300.0                    // This is used as the servo calibration
