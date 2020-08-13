@@ -174,6 +174,7 @@ class TrinamicUartDriver : public StandardStepper {
     void init();
     void set_mode();
     void read_settings();
+    void set_settings();
     void trinamic_test_response();
     void trinamic_stepper_enable(bool enable);
     void debug_message();
