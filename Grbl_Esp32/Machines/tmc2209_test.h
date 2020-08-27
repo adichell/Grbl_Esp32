@@ -1,5 +1,5 @@
 /*
-    tmc2208_test.h
+    tmc2209_test.h
     Part of Grbl_ESP32
 
     Pin assignments for the TMC2209 test with a single motor driver.
@@ -24,6 +24,8 @@
 // Select a version to match your PCB
 
 #define MACHINE_NAME    "ESP32_TMC2209_TEST SINGLE MOTOR"
+
+#define SHOW_EXTENDED_SETTINGS
 
 #define USE_TRINAMIC // Using at least 1 trinamic driver
 

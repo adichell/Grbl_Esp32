@@ -187,7 +187,7 @@ class TrinamicUartDriver : public StandardStepper {
     uint16_t SW_RX_pin;
     uint16_t SW_TX_pin;
 
-    TrinamicUartDriver( uint8_t axis_index, gpio_num_t step_pin, uint8_t dir_pin, uint16_t driver_part_number, float r_senseS, uint8_t addr);
+    TrinamicUartDriver( uint8_t axis_index, gpio_num_t step_pin, uint8_t dir_pin, uint16_t driver_part_number, float r_senseS, HardwareSerial *serial,uint8_t addr);
     TrinamicUartDriver( uint8_t axis_index, gpio_num_t step_pin, uint8_t dir_pin, uint16_t driver_part_number, float r_sense ,uint16_t SW_RX_pin, uint16_t SW_TX_pin, uint8_t addr);
 
   private:

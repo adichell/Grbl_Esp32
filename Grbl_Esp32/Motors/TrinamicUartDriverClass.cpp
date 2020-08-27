@@ -34,6 +34,7 @@ TrinamicUartDriver :: TrinamicUartDriver( uint8_t axis_index,
                                           uint8_t dir_pin,
                                           uint16_t driver_part_number,
                                           float r_sense, 
+                                          HardwareSerial *serial, 
                                           uint8_t addr) {
     this->axis_index = axis_index;
     this->dual_axis_index = axis_index < 6 ? 0 : 1; // 0 = primary 1 = ganged
@@ -42,8 +43,8 @@ TrinamicUartDriver :: TrinamicUartDriver( uint8_t axis_index,
     this->step_pin = step_pin;
     this->dir_pin  = dir_pin;
     this->addr = addr;
-    Serial2.begin(115200, SERIAL_8N1, 16 , 17);
-    Serial2.setRxBufferSize(128);
+    serial->begin(115200, SERIAL_8N1, -1 , -1);
+    serial->setRxBufferSize(128);
     hw_serial_init();
     init();
 }
@@ -95,9 +96,12 @@ void TrinamicUartDriver::sw_serial_init() {
     // grbl_msg_sendf(CLIENT_SERIAL, MSG_LEVEL_INFO, "New SW SERIAL created."); 
     
     // Set PDN DISABLE to ensure UART pin is available to use.
-	tmcstepper->pdn_disable(true);
-    tmcstepper->beginSerial(57600);//19200);
+    tmcstepper->beginSerial(57600);//19200);//57600);//
     
+    vTaskDelay(1 / portTICK_PERIOD_MS); 
+	tmcstepper->pdn_disable(true);
+    
+    //vTaskDelay(1 / portTICK_PERIOD_MS); 
     tmcstepper->senddelay(5); //NOTE: this was to test on OSCILLOSCOPE that the write was effective
 }
 
@@ -106,8 +110,7 @@ void TrinamicUartDriver :: init() {
     
     init_step_dir_pins(); // from StandardStepper
     
-    trinamic_test_response(); // Try communicating with motor. Prints an error if there is a problem.
-    
+    //vTaskDelay(1 / portTICK_PERIOD_MS); 
     if(test()) {
         set_settings();
         read_settings();    
