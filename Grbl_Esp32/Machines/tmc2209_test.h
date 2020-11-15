@@ -38,13 +38,17 @@
 #define TX_SW_SERIAL_MOTORS     GPIO_NUM_5
 #endif
 
+#ifdef HW_SERIAL_MOTORS
+#define SERIAL_FOR_MOTORS       &Serial2
+#endif
+
 #define X_DRIVER_ADDRESS        0
 
 #define X_STEP_PIN              GPIO_NUM_4
 #define X_DIRECTION_PIN         GPIO_NUM_26
 #define X_TRINAMIC              
 #define X_TRINAMIC_DRIVER       2209                   // Which Driver Type?
-#define X_RSENSE                TMC2209_RSENSE_DEFAULT // TODO: change this!
+#define X_RSENSE                TMC2209_RSENSE_DEFAULT
 #define DEFAULT_X_CURRENT       0.5
 
 // OK to comment out to use pin for other features

@@ -25,10 +25,11 @@
 // #include <ESP32SwSerial.h>
 
 //add ESP32 to define SW_CAPABLE_PLATFORM to use SW UART
-//TODO: important notes: add library ESPSoftwareSerial for ESP32 in platformio.ini
+//TODO: important notes: add library ESPSoftwareSerial for ESP32 in platformio.ini.
 
 #define TRINAMIC_FCLK       12700000.0 // Internal clock Approx (Hz) used to calculate TSTEP from homing rate
 
+/* HW Serial Constructor. */
 TrinamicUartDriver :: TrinamicUartDriver( uint8_t axis_index, 
                                           gpio_num_t step_pin,
                                           uint8_t dir_pin,
@@ -49,13 +50,14 @@ TrinamicUartDriver :: TrinamicUartDriver( uint8_t axis_index,
     init();
 }
 
+/* SW Serial Constructor. */
 TrinamicUartDriver :: TrinamicUartDriver( uint8_t axis_index, 
                                           gpio_num_t step_pin,
                                           uint8_t dir_pin,
                                           uint16_t driver_part_number,
                                           float r_sense, 
-                                          uint16_t SW_RX_pin, //only for SW_SERIAL
-                                          uint16_t SW_TX_pin, //only for SW_SERIAL
+                                          uint16_t SW_RX_pin,
+                                          uint16_t SW_TX_pin,
                                           uint8_t addr) {
     this->axis_index = axis_index;
     this->dual_axis_index = axis_index < 6 ? 0 : 1; // 0 = primary 1 = ganged
@@ -63,8 +65,8 @@ TrinamicUartDriver :: TrinamicUartDriver( uint8_t axis_index,
     _r_sense = r_sense;
     this->step_pin = step_pin;
     this->dir_pin  = dir_pin;
-    this->SW_RX_pin = SW_RX_pin; //only for SW_SERIAL
-    this->SW_TX_pin = SW_TX_pin; //only for SW_SERIAL
+    this->SW_RX_pin = SW_RX_pin;
+    this->SW_TX_pin = SW_TX_pin;
     this->addr = addr;
     sw_serial_init();
     init();
@@ -83,6 +85,7 @@ void TrinamicUartDriver::hw_serial_init() {
     }
 }
 void TrinamicUartDriver::sw_serial_init() {
+#ifdef SW_SERIAL_MOTORS //TODO: this ifdef is added to avoid error because ESP32 is not define as SW CAPABLE PLATFORM. Alternatively it can be defined as such.
     if (_driver_part_number == 2208)
         // TMC 2208 does not use address, this field is 0, differently from 2209
         tmcstepper = new TMC2208Stepper(SW_RX_pin, SW_TX_pin, _r_sense);
@@ -93,27 +96,29 @@ void TrinamicUartDriver::sw_serial_init() {
         grbl_msg_sendf(CLIENT_SERIAL, MSG_LEVEL_INFO, "Trinamic Uart unsupported p/n:%d", _driver_part_number);
         return;
     }
-    // grbl_msg_sendf(CLIENT_SERIAL, MSG_LEVEL_INFO, "New SW SERIAL created."); 
     
     // Set PDN DISABLE to ensure UART pin is available to use.
-    tmcstepper->beginSerial(57600);//19200);//57600);//
+    tmcstepper->beginSerial(57600);
     
-    vTaskDelay(1 / portTICK_PERIOD_MS); 
-	tmcstepper->pdn_disable(true);
+    tmcstepper->pdn_disable(true);
     
-    //vTaskDelay(1 / portTICK_PERIOD_MS); 
-    tmcstepper->senddelay(5); //NOTE: this was to test on OSCILLOSCOPE that the write was effective
+    tmcstepper->senddelay(15);
+#endif
 }
+
 
 void TrinamicUartDriver :: init() {
     config_message();
     
     init_step_dir_pins(); // from StandardStepper
     
-    //vTaskDelay(1 / portTICK_PERIOD_MS); 
+    /* If communication with the driver is working, read the 
+       main settings, apply new driver settings and then read 
+       them back. */
     if(test()) {
+        read_settings();
         set_settings();
-        read_settings();    
+        read_settings();
     }
     else {
         grbl_msg_sendf(CLIENT_SERIAL, MSG_LEVEL_INFO, "Driver %c is off, cannot set motor.", report_get_axis_letter(axis_index));
