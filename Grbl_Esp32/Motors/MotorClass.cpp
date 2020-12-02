@@ -353,6 +353,7 @@ void init_motors() {
                                 0 // core
                                );
     }
+    motors_set_disable(false);
 }
 
 uint8_t get_trinamic_driver_uart_address(uint8_t axis) {
@@ -456,6 +457,7 @@ void servoUpdateTask(void* pvParameters) {
 
 
 static bool _current_disable = false;
+
 void motors_set_disable(bool disable) {
 
     if (disable == _current_disable)
@@ -466,10 +468,10 @@ void motors_set_disable(bool disable) {
     //grbl_msg_sendf(CLIENT_SERIAL, MSG_LEVEL_INFO, "motors_set_disable(%d)", disable);
 
     // now step through all the motors
-    for (uint8_t gang_index = 0; gang_index < 2; gang_index++) {
-        for (uint8_t axis = X_AXIS; axis < N_AXIS; axis++)
-            myMotor[axis][gang_index]->set_disable(disable);
-    }
+    // for (uint8_t gang_index = 0; gang_index < 2; gang_index++) {
+    //     for (uint8_t axis = X_AXIS; axis < N_AXIS; axis++)
+    //         myMotor[axis][gang_index]->set_disable(disable);
+    // }
     // global disable pin
 #ifdef STEPPERS_DISABLE_PIN
     if (bit_istrue(settings.flags, BITFLAG_INVERT_ST_ENABLE)) {

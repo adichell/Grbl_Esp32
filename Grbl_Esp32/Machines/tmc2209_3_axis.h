@@ -27,6 +27,8 @@
 
 #define SHOW_EXTENDED_SETTINGS
 
+#define COREXY              
+
 #define USE_TRINAMIC // Using at least 1 trinamic driver
 
 /* Define SW_SERIAL_MOTORS or HW_SERIAL_MOTORS */
@@ -48,7 +50,9 @@
 #define X_TRINAMIC              
 #define X_TRINAMIC_DRIVER       2209                   // Which Driver Type?
 #define X_RSENSE                TMC2209_RSENSE_DEFAULT // TODO: change this!
-#define DEFAULT_X_CURRENT       0.25
+#define DEFAULT_X_CURRENT       0.4
+#define DEFAULT_X_HOLD_CURRENT  50
+#define DEFAULT_X_MICROSTEPS    16
 
 #define Y_DRIVER_ADDRESS        1
 #define Y_STEP_PIN              GPIO_NUM_21
@@ -56,7 +60,9 @@
 #define Y_TRINAMIC              
 #define Y_TRINAMIC_DRIVER       2209                   // Which Driver Type?
 #define Y_RSENSE                TMC2209_RSENSE_DEFAULT // TODO: change this!
-#define DEFAULT_Y_CURRENT       0.5
+#define DEFAULT_Y_CURRENT       0.4
+#define DEFAULT_Y_HOLD_CURRENT  50
+#define DEFAULT_Y_MICROSTEPS    16
 
 #define Z_DRIVER_ADDRESS        2
 #define Z_STEP_PIN              GPIO_NUM_27
@@ -64,17 +70,21 @@
 #define Z_TRINAMIC              
 #define Z_TRINAMIC_DRIVER       2209                   // Which Driver Type?
 #define Z_RSENSE                TMC2209_RSENSE_DEFAULT // TODO: change this!
-#define DEFAULT_Z_CURRENT       0.25
+#define DEFAULT_Z_CURRENT       0.10
+#define DEFAULT_Z_HOLD_CURRENT  50
+#define DEFAULT_Z_MICROSTEPS    2
 
 // OK to comment out to use pin for other features
 #define STEPPERS_DISABLE_PIN    GPIO_NUM_32
 
 //SPINDLE PWM 2
 #define USE_SPINDLE
-// #define SPINDLE_OUTPUT_PIN      GPIO_NUM_2
+#define SPINDLE_OUTPUT_PIN      GPIO_NUM_2
 // #define SPINDLE_TYPE            SPINDLE_TYPE_PWM
 #define SPINDLE_TYPE            SPINDLE_TYPE_BESC
-#define SPINDLE_OUTPUT_PIN      GPIO_NUM_22
+#define BESC_MIN_PULSE_SECS     0.00106f // in seconds
+#define BESC_MAX_PULSE_SECS     0.00186f // in seconds
+// #define SPINDLE_OUTPUT_PIN      GPIO_NUM_22
 // #define SPINDLE_TYPE            SPINDLE_TYPE_LASER
 
 // #define LIMIT PINs 
@@ -100,14 +110,11 @@
 #define DEFAULT_REPORT_INCHES       0 // false
 
 #define DEFAULT_SOFT_LIMIT_ENABLE 0 // false
-#define DEFAULT_HARD_LIMIT_ENABLE 1 // trur
+#define DEFAULT_HARD_LIMIT_ENABLE       1 // true
 
 #define DEFAULT_HOMING_ENABLE           1  // true
 #define DEFAULT_HOMING_DIR_MASK         3 // move positive dir Z,negative X,Y
 #define DEFAULT_HOMING_FEED_RATE        100.0 // mm/min
-#define DEFAULT_HOMING_SEEK_RATE        200.0 // mm/min
+#define DEFAULT_HOMING_SEEK_RATE        1000.0 // mm/min
 #define DEFAULT_HOMING_DEBOUNCE_DELAY   250 // msec (0-65k)
 #define DEFAULT_HOMING_PULLOFF          1.0 // mm
-
-//#define DEFAULT_Z_STEPS_PER_MM 100.0                    // This is used as the servo calibration
-//#define DEFAULT_Z_MAX_TRAVEL   300.0                    // This is used as the servo calibration

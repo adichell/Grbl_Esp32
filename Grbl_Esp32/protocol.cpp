@@ -199,10 +199,10 @@ void protocol_main_loop() {
         protocol_execute_realtime();  // Runtime command check point.
         if (sys.abort)  return;   // Bail to main() program loop to reset system.
         // check to see if we should disable the stepper drivers ... esp32 work around for disable in main loop.
-        if (stepper_idle) {
-            if (esp_timer_get_time() > stepper_idle_counter)
-                motors_set_disable(true);
-        }
+        // if (stepper_idle) {
+        //     if (esp_timer_get_time() > stepper_idle_counter)
+        //         motors_set_disable(true);
+        // }
     }
     return; /* Never reached */
 }

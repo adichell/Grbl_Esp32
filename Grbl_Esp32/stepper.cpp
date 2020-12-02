@@ -605,8 +605,9 @@ void st_go_idle() {
         stepper_idle_counter = esp_timer_get_time() + (settings.stepper_idle_lock_time * 1000); // * 1000 because the time is in uSecs
         //vTaskDelay(settings.stepper_idle_lock_time / portTICK_PERIOD_MS);	// this probably does not work when called from ISR
         //pin_state = true;
-    } else
-        motors_set_disable(pin_state);
+    } 
+    // else
+    //     motors_set_disable(pin_state);
     set_stepper_pins_on(0);
 }
 
